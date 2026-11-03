@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>漢字テスト</title>
+<title>漢字50問テスト</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +68,7 @@ button{font-family:inherit;color:inherit}
 .home{justify-content:center;align-items:center}
 .home h1{margin:0;font-size:clamp(28px,6vh,52px);font-weight:800;letter-spacing:.06em;text-align:center}
 .home .lead{margin:0;color:var(--sub);font-size:clamp(14px,2.2vh,18px);text-align:center}
-.modes{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:14px;width:100%;margin-top:6px}
+.modes{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;margin-top:6px}
 .mode{display:flex;flex-direction:column;gap:8px;padding:18px;align-items:flex-start}
 .mode .tag{font-size:13px;font-weight:800;color:#fff;background:var(--mc);border-radius:999px;padding:.2em .8em;letter-spacing:.08em}
 .mode h2{margin:0;font-size:clamp(20px,3.4vh,28px)}
@@ -95,15 +95,19 @@ button{font-family:inherit;color:inherit}
 .foot .btn.main{flex:1.4;max-width:320px}
 
 /* ---------- ① 書き ---------- */
-.wgrid{flex:1;min-height:0;display:grid;grid-template-columns:auto auto;justify-content:center;gap:clamp(14px,3vw,36px);column-gap:clamp(40px,8vw,120px);align-items:center}
-.clues{list-style:none;margin:0;padding:0 0 0 6px;display:flex;flex-direction:column;gap:clamp(10px,3vh,30px)}
-.clues li{font-size:clamp(20px,min(5vh,4.2vw),42px);font-weight:700;line-height:1.9;display:flex;gap:.5em;align-items:baseline}
-.clues li::before{content:attr(data-n);font-size:.55em;color:#fff;background:var(--write);border-radius:50%;width:1.6em;height:1.6em;display:inline-grid;place-items:center;flex:none;transform:translateY(-.15em)}
+.wgrid{flex:1;min-height:0;display:grid;grid-template-columns:auto auto;justify-content:center;gap:clamp(14px,3vw,36px);column-gap:clamp(32px,5vw,80px);align-items:center}
+.clues{list-style:none;margin:0;padding:0 0 0 6px;display:flex;flex-direction:column;gap:clamp(14px,4.2vh,42px);font-size:clamp(20px,min(6vh,4.6vw),50px);width:11em}
+.clues li{font-size:1em;font-weight:700;line-height:1.9;display:flex;gap:.5em;align-items:baseline}
+.clues li::before{content:attr(data-n);font-size:.55em;color:#fff;background:var(--write);border-radius:50%;width:1.6em;height:1.6em;display:inline-grid;place-items:center;flex:none;transform:translateY(-.26em);padding-bottom:.22em}
 .clues li ruby.bk{ruby-position:over}
 .clues li ruby.bk rt{font-size:.5em;font-weight:800;color:var(--ink);line-height:1;padding-bottom:.25em}
 .blank{display:inline-block;width:1.05em;height:1.05em;border:3px solid var(--ink);border-radius:4px;vertical-align:-.15em;margin:0 .06em;background:rgba(255,255,255,.7);position:relative;overflow:hidden}
 .blank.on{border-color:var(--red);background:#fff}
 .blank.on::after{content:attr(data-k);position:absolute;inset:0;display:grid;place-items:center;font-family:var(--brush);color:var(--red);font-size:.9em;line-height:1;animation:pop .35s ease}
+/* □の中の字は、書き順と同じ線のデータでかく（字の上下のずれが出ない） */
+.blank.svg::after{content:none}
+.blank svg{position:absolute;inset:0;width:100%;height:100%;animation:pop .35s ease}
+.blank path{fill:none;stroke:var(--red);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
 .wans{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,1.8vh,16px)}
 .bigbox{
   --s:min(42vh,32vw,300px);
@@ -200,9 +204,6 @@ button{font-family:inherit;color:inherit}
 .dbtns{display:flex;gap:10px;justify-content:flex-end}
 .dbtns .btn{flex:1;max-width:180px;white-space:nowrap;padding-inline:.6em}
 .btn.danger{color:#fff;background:var(--ng)}
-/* 問題データの書き方チェック（まちがいがあるときだけホームに出る） */
-.dcheck{width:100%;max-height:30vh;overflow:auto;margin:0;padding:10px 14px;border:3px solid var(--ng);border-radius:14px;background:#fff;color:var(--ng);font-size:14px;font-weight:700;line-height:1.6}
-.dcheck ul{margin:4px 0 0;padding-left:1.2em}
 
 /* ---------- スマホ ---------- */
 @media (max-width:720px){
@@ -213,7 +214,7 @@ button{font-family:inherit;color:inherit}
   .mode .sample{display:none}
   .wgrid{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:10px;align-items:start}
   .clues{gap:8px;padding-top:18px}
-  .clues li{font-size:clamp(18px,4.2vh,30px)}
+  .clues{font-size:clamp(18px,4.2vh,30px);width:min(11.5em,100%);justify-self:center}
   .bigbox{--s:min(30vh,58vw,240px)}
   .wans{align-self:center}
   .foot .btn{font-size:15px;padding:.7em .3em}
@@ -233,11 +234,10 @@ button{font-family:inherit;color:inherit}
 <div id="app">
   <!-- ホーム -->
   <section class="screen home" id="home">
-    <h1 id="hTitle"></h1>
-    <p class="lead" id="hLead"></p>
-    <div class="dcheck" id="dcheck" hidden></div>
+    <h1>漢字50問テスト</h1>
+    <p class="lead">4年生で習う漢字。ノートに書いてから「こたえを見る」をおそう。</p>
     <div class="modes" id="modes"></div>
-    <p class="credit" id="credit">書き順データ：KanjiVG（Ulrich Apel, CC BY-SA 3.0）</p>
+    <p class="credit">書き順データ：KanjiVG（Ulrich Apel, CC BY-SA 3.0）</p>
   </section>
 
   <!-- 問題 -->
@@ -300,144 +300,169 @@ button{font-family:inherit;color:inherit}
 </div>
 
 <script>
-/* ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-   ▼▼▼ ここから下が「テストごとに書きかえる」ところ ▼▼▼
-   ・TEST：テストの名前（id はテストごとに必ず変える）
-   ・WRITE・READ・OKURI：問題（使わないモードは [] にする）
-   ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ */
-
-/* テストの名前
-   id：記録（チェック・まちがえた問題）の名前。英数字とハイフン。テストごとに必ず変える
-   title：ホームの大きな字・ブラウザのタブの字
-   lead：題名の下の小さい字 */
-const TEST = {
-  id:'4nen-kanji-2',
-  title:'漢字50問テスト ②',
-  lead:'4年生で習う漢字。ノートに書いてから「こたえを見る」をおそう。'
-};
+/* =========================================================
+   問題データ（ここを書きかえれば問題を変えられます）
+   ========================================================= */
 
 /* ① 書き：k＝答えの漢字、c＝問題（□が答えの場所）。2〜3文 */
 const WRITE = [
   {k:'願',c:['□{ねが}いがかなう','お□{ねが}いする','□{がん}書を出す']},
-  {k:'付',c:['□{ふ}録がほしい','名前を□{つ}ける','□{ふ}近の町']},
-  {k:'協',c:['□{きょう}力する','サッカー□{きょう}会','□{きょう}同作業']},
-  {k:'積',c:['雪が□{つ}もる','面□{せき}を求める','□{つ}み木で遊ぶ']},
-  {k:'夫',c:['キューリー□{ふ}人','□{おっと}と妻','工□{ふう}する']},
-  {k:'以',c:['八百字□{い}内','十才□{い}上','それ□{い}外']},
-  {k:'議',c:['□{ぎ}長をつとめる','学級会□{ぎ}','不思□{ぎ}な話']},
-  {k:'標',c:['目□{ひょう}を立てる','道路□{ひょう}識','こん虫の□{ひょう}本']},
-  {k:'群',c:['鳥の大□{ぐん}','羊が□{む}れる','□{ぐん}馬県']},
-  {k:'郡',c:['県内の□{ぐん}部','□{ぐん}の名前','□{ぐん}にある村']},
-  {k:'官',c:['体の器□{かん}','けいさつ□{かん}','消防□{かん}']},
-  {k:'管',c:['□{かん}楽器をふく','水道□{かん}','血□{かん}']},
-  {k:'富',c:['変化に□{と}む','□{ふ}士山','豊□{ふ}な知識']},
-  {k:'徒',c:['□{と}歩で行く','生□{と}会','□{と}競走']},
+  {k:'付',c:['□{ふ}録がほしい','名前を□{つ}ける','□{ふ}近の店']},
+  {k:'協',c:['□{きょう}力する','□{きょう}会','□{きょう}同で作る']},
+  {k:'積',c:['雪が□{つ}もる','荷物を□{つ}む','面□{せき}を求める']},
+  {k:'夫',c:['キューリー□{ふ}人','工□{ふう}する','□{おっと}の帰り']},
+  {k:'以',c:['八百字□{い}内','三人□{い}上','それ□{い}外の物']},
+  {k:'議',c:['□{ぎ}長をつとめる','会□{ぎ}を開く','□{ぎ}題を決める']},
+  {k:'標',c:['目□{ひょう}を立てる','□{ひょう}本を作る','□{ひょう}語を書く']},
+  {k:'群',c:['鳥の大□{ぐん}','羊の□{む}れ','魚が□{む}れる']},
+  {k:'郡',c:['県内の□{ぐん}部','□{ぐん}と市','□{ぐん}内の学校']},
+  {k:'官',c:['体の器□{かん}','けいさつ□{かん}','外交□{かん}']},
+  {k:'管',c:['□{かん}楽器をふく','血□{かん}','水道□{かん}']},
+  {k:'富',c:['変化に□{と}む','□{ふ}士山','□{と}山県']},
+  {k:'徒',c:['□{と}歩で行く','生□{と}会','□{と}歩十分']},
   {k:'浴',c:['光を□{あ}びる','入□{よく}する','海水□{よく}']},
-  {k:'街',c:['商店□{がい}','□{まち}かど','□{がい}灯がともる']},
-  {k:'灯',c:['港の□{とう}台','電□{とう}をつける','街□{とう}']},
-  {k:'挙',c:['選□{きょ}を行う','例を□{あ}げる','□{きょ}手する']},
-  {k:'票',c:['開□{ひょう}をする','投□{ひょう}用紙','一□{ぴょう}差']},
-  {k:'卒',c:['□{そつ}業する','□{そつ}業式','□{そつ}園']},
-  {k:'貨',c:['□{か}物船にのる','金□{か}をもらう','日本の通□{か}']},
-  {k:'沖',c:['船が□{おき}に出る','□{おき}合','□{おき}縄県']},
-  {k:'戦',c:['□{せん}争が終わる','決勝□{せん}','強い相手と□{たたか}う']},
-  {k:'争',c:['トップを□{あらそ}う','競□{そう}','言い□{あらそ}い']},
-  {k:'給',c:['□{きゅう}食当番','□{きゅう}水車','月□{きゅう}']},
-  {k:'飯',c:['ご□{はん}を食べる','夕□{はん}','焼き□{めし}']},
-  {k:'帯',c:['工業地□{たい}','包□{たい}をまく','着物の□{おび}']},
+  {k:'街',c:['商店□{がい}','夜の□{まち}','□{まち}かどに立つ']},
+  {k:'灯',c:['港の□{とう}台','電□{とう}をつける','□{とう}油を買う']},
+  {k:'挙',c:['選□{きょ}を行う','手を□{あ}げる','例を□{あ}げる']},
+  {k:'票',c:['開□{ひょう}をする','投□{ひょう}用紙','一□{ぴょう}差で勝つ']},
+  {k:'卒',c:['□{そつ}業する','□{そつ}業式','□{そつ}業アルバム']},
+  {k:'貨',c:['□{か}物船にのる','金□{か}','銀□{か}']},
+  {k:'沖',c:['船が□{おき}に出る','□{おき}縄県','□{おき}合']},
+  {k:'戦',c:['□{せん}争が終わる','力いっぱい□{たたか}う','決勝□{せん}']},
+  {k:'争',c:['トップを□{あらそ}う','競□{そう}','言い□{あらそ}う']},
+  {k:'給',c:['□{きゅう}食当番','□{きゅう}料','□{きゅう}水する']},
+  {k:'飯',c:['ご□{はん}を食べる','夕□{はん}','朝ご□{はん}']},
+  {k:'帯',c:['工業地□{たい}','包□{たい}をまく','□{おび}をしめる']},
   {k:'泣',c:['□{な}き声','赤ちゃんが□{な}く','□{な}き虫']},
   {k:'軍',c:['□{ぐん}歌が聞こえる','□{ぐん}手','海□{ぐん}']},
-  {k:'兵',c:['□{へい}隊の行進','□{ひょう}庫県','□{へい}士になる']},
+  {k:'兵',c:['□{へい}隊の行進','□{へい}士','□{ひょう}庫県']},
   {k:'隊',c:['□{たい}列を組む','たんけん□{たい}','音楽□{たい}']},
-  {k:'輪',c:['三□{りん}車','車□{りん}','花の□{わ}']},
-  {k:'景',c:['町の風□{けい}','夜□{けい}','□{け}色']},
-  {k:'浅',c:['□{あさ}い川','遠□{あさ}の海','考えが□{あさ}い']},
-  {k:'底',c:['川の□{そこ}','海□{てい}','くつ□{ぞこ}']},
-  {k:'散',c:['公園を□{さん}歩する','花が□{ち}る','解□{さん}']},
-  {k:'児',c:['□{じ}童を集める','育□{じ}','園□{じ}']},
-  {k:'衣',c:['□{い}服を着る','□{い}食住','白□{い}の人']},
-  {k:'置',c:['えんぴつを□{お}く','位□{ち}を決める','物□{おき}']},
-  {k:'差',c:['点□{さ}が開く','交□{さ}点','時□{さ}']},
+  {k:'輪',c:['三□{りん}車','指□{わ}','□{わ}になる']},
+  {k:'景',c:['町の風□{けい}','夜□{けい}','□{けい}品']},
+  {k:'浅',c:['□{あさ}い川','遠□{あさ}の海','□{あさ}い考え']},
+  {k:'底',c:['川の□{そこ}','海□{てい}','なべの□{そこ}']},
+  {k:'散',c:['公園を□{さん}歩する','花が□{ち}る','花を□{ち}らす']},
+  {k:'児',c:['□{じ}童を集める','育□{じ}','小□{に}科']},
+  {k:'衣',c:['□{い}服を着る','□{い}食住','白□{い}']},
+  {k:'置',c:['えんぴつを□{お}く','位□{ち}','物□{おき}']},
+  {k:'差',c:['点□{さ}が開く','交□{さ}点','かさを□{さ}す']},
   {k:'節',c:['□{せつ}分の豆','季□{せつ}','竹の□{ふし}']},
-  {k:'単',c:['重さの□{たん}位','□{たん}語','簡□{たん}な問題']},
+  {k:'単',c:['重さの□{たん}位','□{たん}語','□{たん}元テスト']},
   {k:'栄',c:['□{えい}養をとる','町が□{さか}える','光□{えい}']},
   {k:'養',c:['休□{よう}をとる','力を□{やしな}う','□{よう}分']},
   {k:'塩',c:['うす□{しお}味','食□{えん}','□{しお}水']},
-  {k:'無',c:['□{む}人島','□{ぶ}事に着く','□{な}くし物']},
-  {k:'産',c:['世界遺□{さん}','□{さん}業','子犬が□{う}まれる']},
+  {k:'無',c:['□{む}人島','□{む}理をする','□{ぶ}事に着く']},
+  {k:'産',c:['世界遺□{さん}','国□{さん}の車','子犬が□{う}まれる']},
   {k:'省',c:['文科□{しょう}','むだを□{はぶ}く','反□{せい}する']},
-  {k:'照',c:['道を□{て}らす','□{しょう}明','日□{で}り']},
+  {k:'照',c:['道を□{て}らす','日□{しょう}時間','□{しょう}明']},
   {k:'祝',c:['入学を□{いわ}う','お□{いわ}い','□{しゅく}日']},
-  {k:'試',c:['野球の□{し}合','入□{し}','□{ため}しにやる']},
-  {k:'熊',c:['□{くま}が出る','□{くま}本県','子□{ぐま}']},
-  {k:'鹿',c:['□{しか}が出る','□{か}児島県','子□{じか}']},
+  {k:'試',c:['野球の□{し}合','□{し}験を受ける','力を□{ため}す']},
+  {k:'熊',c:['□{くま}が出る','□{くま}本県','白□{くま}']},
+  {k:'鹿',c:['□{しか}が出る','□{か}児島県','□{しか}のつの']},
   {k:'残',c:['雪が□{のこ}る','□{ざん}念','食べ□{のこ}し']},
-  {k:'安',c:['不□{あん}な気持ち','□{やす}い品物','□{あん}心する']},
-  {k:'冷',c:['風が□{つめ}たい','□{れい}ぞう庫','水で□{ひ}やす']},
-  {k:'低',c:['□{ひく}い山','最□{てい}気温','□{てい}学年']},
-  {k:'満',c:['□{まん}点をとる','不□{まん}','しおが□{み}ちる']},
-  {k:'未',c:['□{み}知の世界','□{み}来','□{み}定']},
-  {k:'老',c:['□{ろう}人になる','□{ろう}化','年□{お}いる']},
-  {k:'良',c:['品質が□{よ}い','仲□{よ}し','改□{りょう}する']},
-  {k:'陸',c:['着□{りく}する','大□{りく}','□{りく}上競技']},
-  {k:'改',c:['きまりを□{あらた}める','□{かい}札口','□{かい}良']},
-  {k:'城',c:['大きな□{しろ}','□{じょう}下町','宮□{ぎ}県']},
+  {k:'安',c:['不□{あん}な気持ち','□{あん}心する','□{やす}い店']},
+  {k:'冷',c:['風が□{つめ}たい','水で□{ひ}やす','□{れい}ぞう庫']},
+  {k:'低',c:['□{ひく}い山','□{てい}学年','最□{てい}気温']},
+  {k:'満',c:['□{まん}点をとる','水が□{み}ちる','□{まん}月']},
+  {k:'未',c:['□{み}知の世界','□{み}来の自分','□{み}定']},
+  {k:'老',c:['□{ろう}人になる','□{お}いた犬','□{ろう}後の楽しみ']},
+  {k:'良',c:['品質が□{よ}い','□{りょう}心','仲□{よ}し']},
+  {k:'陸',c:['着□{りく}する','大□{りく}','□{りく}上部']},
+  {k:'改',c:['きまりを□{あらた}める','□{かい}札口','□{かい}正']},
+  {k:'城',c:['大きな□{しろ}','□{しろ}あと','名古屋□{じょう}']},
   {k:'辺',c:['□{あた}りを見回す','海□{べ}','周□{へん}']},
-  {k:'菜',c:['□{な}種油','野□{さい}','白□{さい}']}
+  {k:'菜',c:['□{な}種油','野□{さい}を食べる','□{な}の花']}
 ];
 
 /* ② 読み：w＝言葉、i＝答える字の場所（0から）、n＝答える字の数（書かないときは1字）、r＝（ ）に出る読み、s＝音声で読む言葉、v＝聞き取りにくい言葉だけ、声に読ませる文字（書かないときは s） */
-const READ = [];
+const READ = [
+  {w:'決勝戦',i:2,r:'せん',s:'けっしょうせん'},
+  {w:'投票',i:0,n:2,r:'とうひょう',s:'とうひょう'},
+  {w:'郡部',i:0,n:2,r:'ぐんぶ',s:'ぐんぶ'},
+  {w:'塩',i:0,r:'しお',s:'しお'},
+  {w:'たんけん隊',i:4,r:'たい',s:'たんけんたい'},
+  {w:'富む',i:0,r:'と',s:'とむ'},
+  {w:'卒業',i:0,n:2,r:'そつぎょう',s:'そつぎょう'},
+  {w:'沖',i:0,r:'おき',s:'おき'},
+  {w:'送付',i:0,n:2,r:'そうふ',s:'そうふ'},
+  {w:'兵士',i:0,r:'へい',s:'へいし'},
+  {w:'血管',i:0,n:2,r:'けっかん',s:'けっかん'},
+  {w:'交わり',i:0,r:'まじ',s:'まじわり'},
+  {w:'愛犬',i:0,n:2,r:'あいけん',s:'あいけん'},
+  {w:'徒歩',i:0,n:2,r:'とほ',s:'とほ'},
+  {w:'商店街',i:0,n:3,r:'しょうてんがい',s:'しょうてんがい'},
+  {w:'衣服',i:0,n:2,r:'いふく',s:'いふく'},
+  {w:'金貨',i:0,n:2,r:'きんか',s:'きんか'},
+  {w:'給食',i:0,n:2,r:'きゅうしょく',s:'きゅうしょく'},
+  {w:'置く',i:0,r:'お',s:'おく'},
+  {w:'夫人',i:0,n:2,r:'ふじん',s:'ふじん'},
+  {w:'けいさつ官',i:4,r:'かん',s:'けいさつかん'},
+  {w:'夕飯',i:0,n:2,r:'ゆうはん',s:'ゆうはん'},
+  {w:'包帯',i:0,n:2,r:'ほうたい',s:'ほうたい'},
+  {w:'灯台',i:0,n:2,r:'とうだい',s:'とうだい'},
+  {w:'協力',i:0,n:2,r:'きょうりょく',s:'きょうりょく'},
+  {w:'以上',i:0,n:2,r:'いじょう',s:'いじょう'},
+  {w:'国産',i:0,n:2,r:'こくさん',s:'こくさん'},
+  {w:'目標',i:0,n:2,r:'もくひょう',s:'もくひょう'},
+  {w:'交差点',i:0,n:3,r:'こうさてん',s:'こうさてん'},
+  {w:'うれし泣き',i:3,r:'な',s:'うれしなき'},
+  {w:'調節',i:0,n:2,r:'ちょうせつ',s:'ちょうせつ'},
+  {w:'三輪車',i:0,n:3,r:'さんりんしゃ',s:'さんりんしゃ'},
+  {w:'風景',i:0,n:2,r:'ふうけい',s:'ふうけい'},
+  {w:'軍歌',i:0,n:2,r:'ぐんか',s:'ぐんか'},
+  {w:'水の底',i:2,r:'そこ',s:'みずのそこ'},
+  {w:'児童館',i:0,n:3,r:'じどうかん',s:'じどうかん'},
+  {w:'無理',i:0,n:2,r:'むり',s:'むり'},
+  {w:'単位',i:0,n:2,r:'たんい',s:'たんい',v:'たん い'},
+  {w:'会議',i:0,n:2,r:'かいぎ',s:'かいぎ'},
+  {w:'群れる',i:0,r:'む',s:'むれる'},
+  {w:'省く',i:0,r:'はぶ',s:'はぶく'},
+  {w:'散らす',i:0,r:'ち',s:'ちらす'},
+  {w:'栄える',i:0,r:'さか',s:'さかえる'},
+  {w:'挙げる',i:0,r:'あ',s:'あげる'},
+  {w:'争う',i:0,r:'あらそ',s:'あらそう'},
+  {w:'浅い',i:0,r:'あさ',s:'あさい'},
+  {w:'願う',i:0,r:'ねが',s:'ねがう'},
+  {w:'積もる',i:0,r:'つ',s:'つもる'},
+  {w:'養う',i:0,r:'やしな',s:'やしなう'},
+  {w:'浴びる',i:0,r:'あ',s:'あびる'}
+];
 
 /* ③ 送りがな：s＝文（【 】の中が答える言葉）、o＝選択肢（1つめが正しい。画面では順番をまぜて出す） */
 const OKURI = [
   {s:'【ねがい】がかなう',o:['願い','願がい']},
-  {s:'雪が【つもる】',o:['積もる','積る']},
-  {s:'鳥が【むれる】',o:['群れる','群る']},
+  {s:'雪が【つもる】',o:['積もる','積る','積つもる']},
+  {s:'鳥が【むれる】',o:['群れる','群る','群むれる']},
   {s:'光を【あびる】',o:['浴びる','浴る']},
   {s:'手を【あげる】',o:['挙げる','挙る']},
-  {s:'強い相手と【たたかう】',o:['戦う','戦かう']},
-  {s:'トップを【あらそう】',o:['争う','争そう']},
+  {s:'力いっぱい【たたかう】',o:['戦う','戦かう','戦たかう']},
+  {s:'一位を【あらそう】',o:['争う','争そう','争らそう']},
   {s:'【あさい】川',o:['浅い','浅さい']},
-  {s:'花を【ちらす】',o:['散らす','散す']},
+  {s:'花を【ちらす】',o:['散らす','散す','散ちらす']},
   {s:'町が【さかえる】',o:['栄える','栄る','栄かえる']},
-  {s:'体力を【やしなう】',o:['養う','養なう']},
-  {s:'子犬が【うまれる】',o:['産まれる','産れる']},
+  {s:'力を【やしなう】',o:['養う','養なう','養しなう']},
+  {s:'子犬が【うまれる】',o:['産まれる','産れる','産る']},
   {s:'むだを【はぶく】',o:['省く','省ぶく']},
   {s:'道を【てらす】',o:['照らす','照す']},
   {s:'入学を【いわう】',o:['祝う','祝わう']},
   {s:'雪が【のこる】',o:['残る','残こる']},
-  {s:'風が【つめたい】',o:['冷たい','冷い','冷めたい']},
+  {s:'【つめたい】風',o:['冷たい','冷い','冷めたい']},
   {s:'【ひくい】山',o:['低い','低くい']},
-  {s:'しおが【みちる】',o:['満ちる','満る']},
-  {s:'きまりを【あらためる】',o:['改める','改ためる','改る']}
+  {s:'水が【みちる】',o:['満ちる','満る']},
+  {s:'きまりを【あらためる】',o:['改める','改る','改らためる']}
 ];
-
-/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
-   ▲▲▲ 書きかえるのはここまで ▲▲▲
-   ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 /* =========================================================
    設定
    ========================================================= */
 const MODES = {
   write:{name:'漢字を書く',short:'書き',tag:'書き',color:'var(--write)',data:WRITE,
-         desc:'3つの文に共通する漢字を書こう'},
-  read:{name:'読みがなを書く',short:'読み',tag:'読み',color:'var(--read)',data:READ,
-        desc:'線の部分の読みを書こう'},
+         desc:'3つの文に共通する漢字を書こう',
+         sample:'鳥の<span class="bx"></span>'},
   okuri:{name:'送りがなクイズ',short:'送りがな',tag:'送りがな',color:'var(--okuri)',data:OKURI,
-         desc:'正しい送りがなをえらぼう'}
+         desc:'正しい送りがなをえらぼう',
+         sample:'目をさます → 覚ます'}
 };
-/* 問題が1問もないモードは、ホームに出さない */
-const KEYS=Object.keys(MODES).filter(k=>MODES[k].data.length);
-/* ホームの見本：各モードの1問めからつくる */
-function sampleOf(key){
-  const q=MODES[key].data[0];
-  const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  if(key==='write')return e(q.c[0]).replace(/□\{.*?\}/g,'<span class="bx"></span>');
-  if(key==='read'){const ws=[...q.w],n=q.n||1;return e(ws.slice(0,q.i).join(''))+'<u>'+e(ws.slice(q.i,q.i+n).join(''))+'</u>'+e(ws.slice(q.i+n).join(''))}
-  return e(q.s.replace(/[【】]/g,''))+' → '+e(q.o[0]);
-}
 
 /* =========================================================
    音（ピンポン・ブブー）・音声・紙吹雪
@@ -498,7 +523,7 @@ function party(){
 /* =========================================================
    まちがえた問題の記録（このブラウザだけに残る）
    ========================================================= */
-const KEY='kanji50-wrong-'+TEST.id;
+const KEY='kanji50-wrong-v1';
 function loadWrong(){
   try{const v=JSON.parse(localStorage.getItem(KEY)||'{}');return v&&typeof v==='object'?v:{}}catch(e){return {}}
 }
@@ -506,28 +531,34 @@ let WRONG=loadWrong();
 function saveWrong(){try{localStorage.setItem(KEY,JSON.stringify(WRONG))}catch(e){}}
 
 /* チェックが入った問題（できた問題）の記録。次からは出さない。モードごとに「リセット」で消せる */
-const DKEY='kanji50-done-'+TEST.id;
+const DKEY='kanji50-done-v1';
 function loadDone(){
   try{const v=JSON.parse(localStorage.getItem(DKEY)||'{}');return v&&typeof v==='object'?v:{}}catch(e){return {}}
 }
 let DONE=loadDone();
-/* 問題を書きかえたら、そのモードの記録を一度だけ消す（記録は問題の番号でおぼえているため）
-   モードごとの問題データから「しるし」をつくり、前に開いたときとちがえば消す */
-const SKEY='kanji50-sig-'+TEST.id;
-function sigOf(data){
-  const t=JSON.stringify(data);let a=0;
-  for(let i=0;i<t.length;i++)a=(a*31+t.charCodeAt(i))|0;
-  return data.length+'-'+(a>>>0).toString(36);
-}
+/* 「書き」の問題を66字に入れかえた（2026-11-03）。前の問題の番号で残っている記録を一度だけ消す */
 try{
-  const old=JSON.parse(localStorage.getItem(SKEY)||'{}')||{};
-  const now={};
-  Object.keys(MODES).forEach(k=>{
-    now[k]=sigOf(MODES[k].data);
-    if(old[k]!==now[k]){delete DONE[k];delete WRONG[k]}
-  });
-  localStorage.setItem(SKEY,JSON.stringify(now));
-  saveDone();saveWrong();
+  if(localStorage.getItem('kanji50-write-ver')!=='5'){
+    delete DONE.write;saveDone();
+    delete WRONG.write;saveWrong();
+    localStorage.setItem('kanji50-write-ver','5');
+  }
+}catch(e){}
+/* 「読み」の問題を24問に入れかえた（2026-11-03）。前の問題の番号で残っている記録を一度だけ消す */
+try{
+  if(localStorage.getItem('kanji50-read-ver')!=='4'){
+    delete DONE.read;saveDone();
+    delete WRONG.read;saveWrong();
+    localStorage.setItem('kanji50-read-ver','4');
+  }
+}catch(e){}
+/* 「送りがな」の問題を20問に入れかえた（2026-11-03）。前の問題の番号で残っている記録を一度だけ消す */
+try{
+  if(localStorage.getItem('kanji50-okuri-ver')!=='5'){
+    delete DONE.okuri;saveDone();
+    delete WRONG.okuri;saveWrong();
+    localStorage.setItem('kanji50-okuri-ver','5');
+  }
 }catch(e){}
 function saveDone(){try{localStorage.setItem(DKEY,JSON.stringify(DONE))}catch(e){}}
 function isDone(mode,i){return (DONE[mode]||[]).includes(i)}
@@ -537,8 +568,6 @@ function setDone(mode,i,on){
   DONE[mode]=a;saveDone();
 }
 function remaining(mode){return MODES[mode].data.map((_,i)=>i).filter(i=>!isDone(mode,i))}
-/* まちがえた問題（今の問題データにある番号だけ） */
-function wrongOf(mode){const n=MODES[mode].data.length;return (WRONG[mode]||[]).filter(i=>Number.isInteger(i)&&i>=0&&i<n)}
 
 /* =========================================================
    画面
@@ -550,20 +579,17 @@ const CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width
 const SPEAK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
 
 function renderHome(){
-  $('modes').style.setProperty('--n',Math.max(KEYS.length,1));
-  $('modes').innerHTML=KEYS.map(key=>{
-    const m=MODES[key];
-    const w=wrongOf(key).filter(i=>!isDone(key,i)).length;
+  $('modes').innerHTML=Object.entries(MODES).map(([key,m])=>{
+    const w=(WRONG[key]||[]).filter(i=>!isDone(key,i)).length;
     const left=remaining(key).length;
     return `<div class="mode glass" style="--mc:${m.color}">
       <span class="tag">${m.tag}</span>
       <h2>${m.name}</h2>
-      <div class="sample">${(()=>{try{return sampleOf(key)}catch(e){return ''}})()}</div>
+      <div class="sample">${m.sample}</div>
       <div style="color:var(--sub);font-size:clamp(13px,2vh,16px)">${m.desc}（${m.data.length}問）</div>
       <div class="left">${left?`のこり ${left}問`:'ぜんぶクリア！'}</div>
       <div class="row">
         <button class="btn main" type="button" data-start="${key}">はじめる</button>
-        ${w?`<button class="btn retry" type="button" data-retry="${key}">まちがえた ${w}問</button>`:''}
       </div>
     </div>`;
   }).join('');
@@ -572,7 +598,7 @@ $('modes').addEventListener('click',e=>{
   const s=e.target.closest('[data-start]'),r=e.target.closest('[data-retry]');
   ac();
   if(s)start(s.dataset.start,null);
-  if(r)start(r.dataset.retry,wrongOf(r.dataset.retry));
+  if(r)start(r.dataset.retry,WRONG[r.dataset.retry]);
 });
 
 /* ---------- 問題の進め方 ---------- */
@@ -599,7 +625,7 @@ function render(){
   $('count').textContent=`${S.pos+1} / ${n}`;
   $('progBar').style.width=((S.pos+1)/n*100)+'%';
   $('prev').disabled=S.pos===0;
-  $('next').textContent=S.pos===n-1?'けっか ▶':'つぎ ▶';
+  $('next').textContent='つぎ ▶';
   const panel=$('panel');
 
   if(S.mode==='write'){
@@ -609,10 +635,10 @@ function render(){
       <ul class="clues">${clues}</ul>
       <div class="wans">
         <div class="bigbox" aria-label="答えのわく">${open?'<div class="kanim" id="kanim"></div>':''}</div>
-        <div class="wbelow${open?'':' wait'}"><div class="wrow"><span class="kcount" id="kcount"></span><button class="btn replay" type="button" id="replay">もう一度かく</button></div>${chk('書けた！',idx)}${open?'':'<div class="chk-wait">ノートに書いたら<br>「こたえを見る」</div>'}</div>
+        <div class="wbelow${open?'':' wait'}"><div class="wrow"><span class="kcount" id="kcount"></span><button class="btn replay" type="button" id="replay">もう一度、書く</button></div>${chk('書けた！',idx)}${open?'':'<div class="chk-wait">ノートに書いたら<br>「こたえを見る」</div>'}</div>
       </div></div>`;
     $('check').hidden=false;$('check').disabled=open;
-    if(open){drawStrokes(q.k);$('replay').onclick=()=>drawStrokes(q.k)}
+    if(open){drawStrokes(q.k);fillBlanks(q.k);$('replay').onclick=()=>drawStrokes(q.k)}
     else{ANIM++;loadStrokes(q.k)}
   }
 
@@ -676,6 +702,17 @@ function loadStrokes(k){
     }).catch(()=>null);
   }
   return KVG[k];
+}
+/* □の中に答えの字をかく（線のデータが読みこめないときは、ふつうの字のまま） */
+function fillBlanks(k){
+  loadStrokes(k).then(ps=>{
+    if(!ps)return;
+    document.querySelectorAll('#panel .blank.on').forEach(b=>{
+      if(b.dataset.k!==k)return;
+      b.classList.add('svg');
+      b.innerHTML='<svg viewBox="0 0 109 109">'+ps.map(d=>'<path d="'+d+'"/>').join('')+'</svg>';
+    });
+  });
 }
 function drawStrokes(k){
   const box=$('kanim');if(!box)return;
@@ -755,6 +792,8 @@ function finish(){
   const n=S.list.length,good=n-wrong.length;
   WRONG[S.mode]=wrong;saveWrong();
   if(!remaining(S.mode).length){congrats(S.mode);return}
+  /* まだチェックがついていない問題を、そのままつづけて出す（ぜんぶチェックがついたら、おめでとう画面） */
+  start(S.mode,null);return;
   $('result').style.setProperty('--mc',m.color);
   $('rMode').textContent=m.name+(S.retry?'（まちがえた問題）':'');
   $('rScore').innerHTML=`${good}<small> / ${n}</small>`;
@@ -773,7 +812,7 @@ function label(mode,i){
   if(mode==='read')return READ[i].w;
   return OKURI[i].o[0];
 }
-$('rRetry').addEventListener('click',()=>start(S.mode,wrongOf(S.mode)));
+$('rRetry').addEventListener('click',()=>start(S.mode,WRONG[S.mode]));
 $('rAgain').addEventListener('click',()=>start(S.mode,null));
 $('rHome').addEventListener('click',()=>{renderHome();show('home')});
 
@@ -821,52 +860,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'&&!$('prev').disabled)$('prev').click();
 });
 
-/* ---------- 問題データの書き方チェック（内容が正しいかは調べない） ---------- */
-function checkData(){
-  const errs=[],str=v=>typeof v==='string'&&v.length>0;
-  WRITE.forEach((q,j)=>{
-    const p=`書き ${j+1}問め：`;
-    if(!str(q.k)||[...q.k].length!==1)errs.push(p+'k は漢字1字にする');
-    if(!Array.isArray(q.c)||!q.c.length){errs.push(p+'c（文）がない');return}
-    q.c.forEach((c,t)=>{
-      if(!str(c)){errs.push(p+`${t+1}つめの文がない`);return}
-      if(!/□\{.+?\}/.test(c))errs.push(p+`${t+1}つめの文に □{よみ} がない（「${c}」）`);
-      if(/□(?!\{.+?\})/.test(c))errs.push(p+`${t+1}つめの文に {よみ} のない □ がある（「${c}」）`);
-    });
-  });
-  const ks=WRITE.map(q=>q.k);
-  ks.forEach((k,j)=>{if(ks.indexOf(k)!==j)errs.push(`書き ${j+1}問め：「${k}」が2回ある`)});
-  READ.forEach((q,j)=>{
-    const p=`読み ${j+1}問め：`;
-    if(!str(q.w)){errs.push(p+'w（言葉）がない');return}
-    if(!str(q.r))errs.push(p+`r（読み）がない（「${q.w}」）`);
-    if(!str(q.s))errs.push(p+`s（音声）がない（「${q.w}」）`);
-    const L=[...q.w].length,n=q.n===undefined?1:q.n;
-    if(!Number.isInteger(n)||n<1)errs.push(p+`n は 1 以上の数にする（「${q.w}」）`);
-    else if(!Number.isInteger(q.i)||q.i<0||q.i+n>L)errs.push(p+`i と n が言葉の字数をこえている（「${q.w}」は${L}字）`);
-    if(q.v!==undefined&&!str(q.v))errs.push(p+`v は文字にする（「${q.w}」）`);
-    if(q.vr!==undefined&&!(typeof q.vr==='number'&&q.vr>=.3&&q.vr<=2))errs.push(p+`vr は 0.3〜2 の数にする（「${q.w}」）`);
-  });
-  OKURI.forEach((q,j)=>{
-    const p=`送りがな ${j+1}問め：`;
-    if(!str(q.s)||!/【.+?】/.test(q.s))errs.push(p+'s に【 】がない');
-    if(!Array.isArray(q.o)||q.o.length<2)errs.push(p+'o（選択肢）は2つ以上にする');
-    else if(new Set(q.o).size!==q.o.length)errs.push(p+'o に同じ選択肢がある');
-  });
-  if(!KEYS.length)errs.push('問題が1問もない（WRITE・READ・OKURI のどれかに問題を入れる）');
-  if(!/^[A-Za-z0-9-]+$/.test(TEST.id||''))errs.push('TEST.id は英数字とハイフンにする');
-  if(errs.length){
-    console.warn('問題データの書き方のまちがい：\n'+errs.join('\n'));
-    $('dcheck').innerHTML='問題データの書き方にまちがいがあります（'+errs.length+'こ）<ul>'+errs.map(t=>`<li>${esc(t)}</li>`).join('')+'</ul>';
-    $('dcheck').hidden=false;
-  }
-}
-
-document.title=TEST.title;
-$('hTitle').textContent=TEST.title;
-$('hLead').textContent=TEST.lead;
-$('credit').hidden=!WRITE.length;
-try{checkData()}catch(e){console.warn(e)}
 renderHome();
 </script>
 </body>
